@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizuální stránka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #efe9e9;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            border-radius: 0 0 5px 5px;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav .right-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: auto;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            transition: all 0.3s;
+            margin: 9px;
+        }
+
+        nav a:hover {
+            background-color: #45a049;
+            border: 1px solid white;
+        }
+
+        .login-registration-link-container {
+            display: flex;
+            align-items: center;
+            margin: 9px;
+        }
+
+        .login-registration-link-container img {
+            width: 30px;
+            height: 30px;
+            margin-left: 9px;
+        }
+
+        .login-registration-link {
+            background-color: white;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .login-registration-link:hover {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+            margin: 9px;
+        }
+
+        .search-bar {
+            padding: 5px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            transition: width 0.3s ease-in-out;
+            width: 150px;
+        }
+
+        .search-bar:focus {
+            width: 250px;
+        }
+
+        .search-icon {
+            background-color: white;
+            padding: 5px;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        .cart-icon {
+            cursor: pointer;
+            border: none;
+            background: none;
+            margin-left: 10px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            flex: 1;
+            margin-top: 70px;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .slide img {
+            width: 100%;
+            display: block;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-color: #4CAF50;
+        }
+
+        .btn-toggle {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-toggle:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .login-signup {
+            margin: 40px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: white;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-signup h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-signup form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-signup input {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-signup button {
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            outline: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .login-signup button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .half-images, .four-images {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px 0;
+        }
+
+        .half-images img, .four-images img {
+            width: 49%;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .four-images img {
+            width: 23%;
+        }
+
+        .logo-carousel-container {
+            width: 100%;
+            overflow: hidden;
+            margin: 10px 0;
+            padding: 20px 0;
+            background-color: none;
+            border-left: 2px solid grey;
+            border-right: 2px solid grey;
+            border-radius: 10px;
+            transition: all 1s;
+        }
+        .logo-carousel-container:hover {
+            border-left: 2px solid #4CAF50;
+            border-right: 2px solid #4CAF50;
+            transition: all 1s;
+        }
+
+        .logo-slides {
+            display: flex;
+            animation: scroll 15s linear infinite ;
+            
+        }
+
+        .logo-slide {
+            min-width: 20%;
+            padding: 10px;
+            margin-left: 5px;
+            margin-right: 5px;
+            border-radius: 5px;
+            transition: all 1s;
+            border: 1px solid #efe9e9;
+        }
+        .logo-slide:hover {
+            color: #45a049;
+            border: 1px solid ;
+            border-radius: 20%;
+            transition: all 1s;
+        }
+
+        .logo-slide img {
+            width: 100%;
+            display: block;
+            border-radius: 5px;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            width: 90%;
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: auto;
+        }
+
+        footer nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 10px;
+            padding: 5px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        footer a:hover {
+            background-color: #4CAF50;
+            border: 1px solid white;
+        }
+        .spolupracujeme {
+            text-align: center;
+            color: #4CAF50;
+            margin: 20px 2px 20px 2px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://via.placeholder.com/150x50" alt="Logo">
+        <nav>
+            <div class="nav-links">
+                <a href="#home">Domů</a>
+                <a href="#about">O nás</a>
+                <a href="#services">Služby</a>
+                <a href="#contact">Kontakt</a>
+            </div>
+            <div class="right-section">
+                <div class="search-bar-container">
+                    <input type="text" class="search-bar" placeholder="Hledat...">
+                    <button class="search-icon">🔍</button>
+                </div>
+                <a href="#cart" class="cart">🛒</a>
+                <div class="login-registration-link-container">
+                    <a href="#log" class="login-registration-link">Přihlášení</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="carousel">
+            <div class="slides">
+                <div class="slide">
+                    <img src="https://via.placeholder.com/1200x400" alt="Slide 1">
+                </div>
+                <div class="slide">
+                    <img src="https://via.placeholder.com/1200x400" alt="Slide 2">
+                </div>
+                <div class="slide">
+                    <img src="https://via.placeholder.com/1200x400" alt="Slide 3">
+                </div>
+            </div>
+        </div>
+
+        <h1 class="spolupracujeme">Spolupracujeme s</h1>
+        <div class="logo-carousel-container">
+            <div class="logo-carousel">
+                <div class="logo-slides">
+                    <div class="logo-slide">
+                        <img src="https://via.placeholder.com/150x50" alt="Logo 1">
+                    </div>
+                    <div class="logo-slide">
+                        <img src="https://via.placeholder.com/150x50" alt="Logo 2">
+                    </div>
+                    <div class="logo-slide">
+                        <img src="https://via.placeholder.com/150x50" alt="Logo 3">
+                    </div>
+                    <div class="logo-slide">
+                        <img src="https://via.placeholder.com/150x50" alt="Logo 4">
+                    </div>
+                    <div class="logo-slide">
+                        <img src="https://via.placeholder.com/150x50" alt="Logo 5">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card">
+                <h2>Card 1</h2>
+                <p>This is a description for card 1.</p>
+                <button class="btn-toggle">+🛒</button>
+            </div>
+            <div class="card">
+                <h2>Card 2</h2>
+                <p>This is a description for card 2.</p>
+                <button class="btn-toggle">+🛒</button>
+            </div>
+            <div class="card">
+                <h2>Card 3</h2>
+                <p>This is a description for card 3.</p>
+                <button class="btn-toggle">+🛒</button>
+            </div>
+            <div class="card">
+                <h2>Card 4</h2>
+                <p>This is a description for card 4.</p>
+                <button class="btn-toggle">+🛒</button>
+            </div>
+            <section class="card">
+                <h2>Karta 5</h2>
+                <p>Toto je obsah páté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 6</h2>
+                <p>Toto je obsah šesté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 7</h2>
+                <p>Toto je obsah sedmé karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 8</h2>
+                <p>Toto je obsah osmé karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 9</h2>
+                <p>Toto je obsah deváté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 10</h2>
+                <p>Toto je obsah desáté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 11</h2>
+                <p>Toto je obsah jedenácté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 12</h2>
+                <p>Toto je obsah dvanácté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 13</h2>
+                <p>Toto je obsah třinácté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 14</h2>
+                <p>Toto je obsah čtrnácté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 15</h2>
+                <p>Toto je obsah patnácté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 16</h2>
+                <p>Toto je obsah šestnácté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 17</h2>
+                <p>Toto je obsah sedmnácté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 18</h2>
+                <p>Toto je obsah osmnácté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 19</h2>
+                <p>Toto je obsah devatenácté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+            <section class="card">
+                <h2>Karta 20</h2>
+                <p>Toto je obsah dvacáté karty.</p>
+                <button class="btn-toggle">+🛒</button>
+            </section>
+        </div>
+
+
+        <div class="login-signup">
+            <h2>Přihlášení</h2>
+            <form>
+                <input type="text" placeholder="Uživatelské jméno" required>
+                <input type="password" placeholder="Heslo" required>
+                <button type="submit" id="log">Přihlásit se</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <nav>
+            <a href="#home">Domů</a>
+            <a href="#about">O nás</a>
+            <a href="#services">Služby</a>
+            <a href="#contact">Kontakt</a>
+        </nav>
+        <p>&copy; 2023 Vaše Společnost. Všechna práva vyhrazena.</p>
+    </footer>
+</body>
+</html>
+
